@@ -75,7 +75,7 @@ def install_package(package_name: str):
 
 def remove_package(package_name: str):
     # Determine if the install is valid
-    package_path = get_directory_path(__file__, 0) + "/packages/" + package_name
+    package_path = get_directory_path(__file__, 0) + "/lib/" + package_name
     if os.path.exists(package_path):
         # Remove package
         delete_folder_with_contents(package_path)
