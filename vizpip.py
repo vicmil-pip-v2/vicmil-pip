@@ -59,7 +59,7 @@ def install_installer():
             install_file.write(html)
 
     if not os.path.exists(vizpip_path+ "/venv"):
-        import vizpip_env.installer
+        import vizpip_env.installer as viz_installer
         viz_installer.python_virtual_environment(vizpip_path + "/venv")
         viz_installer.pip_install_packages_in_virtual_environment(vizpip_path + "/venv", ["gdown"])
 
