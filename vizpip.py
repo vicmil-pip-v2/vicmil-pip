@@ -40,7 +40,7 @@ def get_directory_path(__file__in, up_directories=0):
 
 
 def install_installer():
-    vizpip_path = get_directory_path(__file__, 0) + "/vizpip"
+    vizpip_path = get_directory_path(__file__, 0) + "/vizpip_env"
     if not os.path.exists(vizpip_path):
         os.makedirs(vizpip_path, exist_ok=True)
 
