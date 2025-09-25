@@ -141,6 +141,15 @@ python3 vizpip.py packages // list all available packages with more info
         if len(arguments) > 1:
             viz_installer.remove_package(arguments[1])
             viz_installer.install_package(arguments[1])
+
+    if arguments[0] == "clone":
+        if not installer_exists():
+            install_installer()
+
+        import vizpip_env.installer as viz_installer
+
+        if len(arguments) > 1:
+            viz_installer.clone_package(arguments[1])
         
     if arguments[0] == "update":
         print("upgrade vizpip/installer.py")

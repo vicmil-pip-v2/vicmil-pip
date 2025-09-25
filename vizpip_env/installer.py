@@ -73,6 +73,16 @@ def install_package(package_name: str):
         run_command(f'"{sys.executable}" "{package_path}/setup.py"')
 
 
+def clone_package(package_name: str):
+    package_path = get_directory_path(__file__, 0) + "/lib/" + package_name
+    if os.path.exists(package_path):
+        print(f"Package {package_name} path already exists")
+        return
+
+    github_repo = f"git@github.com:vizpip/{package_name}.git"
+
+    run_command(f'git clone "{github_repo}" "{package_path}"')
+
 def remove_package(package_name: str):
     # Determine if the install is valid
     package_path = get_directory_path(__file__, 0) + "/lib/" + package_name
