@@ -49,15 +49,24 @@ def install_package(package_name: str):
         print(f"Package {package_name} path already exists")
         return
 
-    # Create the package directory
-    os.makedirs(package_path, exist_ok=True)
-
     # Get the github repo path
-    github_repo = f"https://github.com/vizpip/{package_name}/archive/refs/heads/main.zip"
+    github_repo_main =   f"https://github.com/vizpip/{package_name}/archive/refs/heads/main.zip"
+    github_repo_master = f"https://github.com/vizpip/{package_name}/archive/refs/heads/master.zip"
 
     # Download the package and unzip it
     tmp_zip = get_directory_path(__file__, 0) + "/temp.zip"
-    download_github_repo_as_zip(github_repo, tmp_zip)
+
+    download_github_repo_as_zip(github_repo_main, tmp_zip)
+    if not os.path.exists(tmp_zip):
+        download_github_repo_as_zip(github_repo_master, tmp_zip)
+
+    if not os.path.exists(tmp_zip):
+        print("Download failed, could not find url!")
+        return
+        
+    # Create the package directory
+    os.makedirs(package_path, exist_ok=True)
+
     unzip_without_top_dir(tmp_zip, package_path, delete_zip=True)
 
     # Install other vizpip dependencies
