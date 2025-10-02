@@ -1,4 +1,4 @@
-# 🚀 Welcome to **vizpip**
+# 🚀 Welcome to **vicmil-pip**
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Platform](https://img.shields.io/badge/platform-windows%20%7C%20linux%20%7C%20macos-lightgrey)
