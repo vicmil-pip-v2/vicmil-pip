@@ -91,7 +91,7 @@ python3 vicmil-pip.py remove some_packagename
 
 Prefer doing things by hand? You can:
 
-1. Navigate to your desired package inside `vicmil-pip-v2`
+1. Navigate to your desired package inside `[vicmil-pip-v2](https://github.com/orgs/vicmil-pip-v2/repositories)`
 
 2. Extract it into:
 
