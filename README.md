@@ -34,7 +34,7 @@ touch vicmil-pip.py
 Paste this into `vimcil-pip.py` and run it:
 
 ```python
-# Bootstrap installer for vizpip
+# Bootstrap installer for vicmil-pip
 import urllib.request
 
 with urllib.request.urlopen(
