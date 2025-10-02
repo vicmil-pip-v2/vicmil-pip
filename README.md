@@ -99,7 +99,7 @@ Prefer doing things by hand? You can:
    vicmil_pip/lib/<package-name>
    ```
 
-3. If present, run `setup.py` or check `vicmil_requirements.txt` for dependencies
+3. If present, run `setup.py` or check `vicmil_pip_requirements.txt` for dependencies
 
 ---
 
