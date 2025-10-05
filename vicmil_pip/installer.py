@@ -282,4 +282,5 @@ def download_github_repo_as_zip(zip_url: str, output_zip_file: str):
         
         print(f"Download complete: {output_zip_file}")
     except Exception as e:
-        print(f"Error: {e}")
+        #print(f"Error: {e}")
+        pass
