@@ -261,6 +261,70 @@ class PipManager:
             self.include_other_venv()
 
 
+def download_file(url, output_path, remove_existing_file=False):
+    """
+    Download a file from a URL with a single-line progress bar showing percentage
+    and human-readable sizes. Optionally removes the output file if it already exists.
+    If the file size is unknown, it prints "unknown size".
+    
+    Args:
+        url (str): URL of the file to download.
+        output_path (str): Path to save the downloaded file.
+        remove_existing_file (bool): If True, removes the file if it exists before downloading.
+    """
+    import requests
+    import sys
+    import os
+
+    # Remove existing file if requested
+    if remove_existing_file and os.path.exists(output_path):
+        os.remove(output_path)
+
+    def human_readable(size):
+        """Convert bytes to a human-readable string with correct units."""
+        for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
+            if size < 1024:
+                return f"{size:6.2f} {unit}"
+            size /= 1024
+        return f"{size:.2f} PB"
+
+    response = requests.get(url, stream=True)
+    response.raise_for_status()
+
+    total_size = response.headers.get('content-length')
+    total_size = int(total_size) if total_size else None
+
+    downloaded = 0
+    chunk_size = 1024  # 1 KB
+    bar_length = 50    # progress bar length
+
+    with open(output_path, "wb") as file:
+        for chunk in response.iter_content(chunk_size=chunk_size):
+            if chunk:
+                file.write(chunk)
+                downloaded += len(chunk)
+
+                if total_size:
+                    percent = downloaded / total_size
+                    filled_length = int(bar_length * percent)
+                    bar = '=' * filled_length + '-' * (bar_length - filled_length)
+                    sys.stdout.write(
+                        f"\r[{bar}] {percent*100:6.2f}% "
+                        f"({human_readable(downloaded)} / {human_readable(total_size)})"
+                    )
+                else:
+                    # File size unknown
+                    filled_length = min(bar_length, downloaded // chunk_size)
+                    bar = '=' * filled_length + '-' * (bar_length - filled_length)
+                    sys.stdout.write(
+                        f"\r[{bar}] Downloaded {human_readable(downloaded)} / unknown size"
+                    )
+
+                sys.stdout.flush()
+
+    print("\nDownload complete!")
+
+
 def download_github_repo_as_zip(zip_url: str, output_zip_file: str):
     """Downloads a GitHub repository as a ZIP file.
     
@@ -274,13 +338,7 @@ def download_github_repo_as_zip(zip_url: str, output_zip_file: str):
             pip_manager.add_pip_package("requests")
             pip_manager.install_missing_modules()
 
-        import requests
-        response = requests.get(zip_url, stream=True)
-        response.raise_for_status()  # Raise an error for bad responses
-        
-        with open(output_zip_file, "wb") as file:
-            for chunk in response.iter_content(chunk_size=1024):
-                file.write(chunk)
+        download_file(url=zip_url, output_path=output_zip_file, remove_existing_file=True)
         
         # print(f"Download complete: {output_zip_file}")
     except Exception as e:
