@@ -43,7 +43,37 @@ def print_installed_packages():
     print(folders)
 
 
-def install_package(package_name: str):
+def get_correct_github_repo_name(package_name: str) -> str | None:
+    """
+    Return the true capitalization of a GitHub repo for a given package name.
+    
+    Args:
+        package_name (str): The repo name to check (any capitalization)
+        
+    Returns:
+        str | None: Correctly capitalized repo name, or None if not found
+    """
+    import requests
+    url = f"https://api.github.com/users/vicmil-pip-v2/repos"
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        repos = response.json()
+        for repo in repos:
+            if repo["name"].lower() == package_name.lower():
+                return repo["name"]  # Correct capitalization
+    except requests.RequestException as e:
+        print(f"Error accessing GitHub API: {e}")
+    
+    return None
+
+
+def install_package(package_name_raw: str):
+    package_name = get_correct_github_repo_name(package_name_raw)
+    if not package_name:
+        print(f"Package {package_name_raw} does not exists")
+        return
+    
     package_path = get_directory_path(__file__, 0) + "/lib/" + package_name
     if os.path.exists(package_path):
         print(f"Package {package_name} path already exists")
@@ -84,7 +114,12 @@ def install_package(package_name: str):
     print("Succesfully installed package", package_name)
 
 
-def clone_package(package_name: str):
+def clone_package(package_name_raw: str):
+    package_name = get_correct_github_repo_name(package_name_raw)
+    if not package_name:
+        print(f"Package {package_name_raw} does not exists")
+        return
+    
     package_path = get_directory_path(__file__, 0) + "/lib/" + package_name
     if os.path.exists(package_path):
         print(f"Package {package_name} path already exists")
@@ -93,6 +128,8 @@ def clone_package(package_name: str):
     github_repo = f"git@github.com:vicmil-pip-v2/{package_name}.git"
 
     run_command(f'git clone "{github_repo}" "{package_path}"')
+
+    print("Succesfully cloned package", package_name)
 
 def remove_package(package_name: str):
     # Determine if the install is valid
