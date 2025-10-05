@@ -81,6 +81,8 @@ def install_package(package_name: str):
     if os.path.exists(f"{package_path}/setup.py"):
         run_command(f'"{sys.executable}" "{package_path}/setup.py"')
 
+    print("Succesfully installed package", package_name)
+
 
 def clone_package(package_name: str):
     package_path = get_directory_path(__file__, 0) + "/lib/" + package_name
@@ -280,7 +282,7 @@ def download_github_repo_as_zip(zip_url: str, output_zip_file: str):
             for chunk in response.iter_content(chunk_size=1024):
                 file.write(chunk)
         
-        print(f"Download complete: {output_zip_file}")
+        # print(f"Download complete: {output_zip_file}")
     except Exception as e:
         #print(f"Error: {e}")
         pass
