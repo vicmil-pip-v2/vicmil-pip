@@ -50,8 +50,8 @@ def install_package(package_name: str):
         return
 
     # Get the github repo path
-    github_repo_main =   f"https://github.com/vizpip/{package_name}/archive/refs/heads/main.zip"
-    github_repo_master = f"https://github.com/vizpip/{package_name}/archive/refs/heads/master.zip"
+    github_repo_main =   f"https://github.com/vicmil-pip-v2/{package_name}/archive/refs/heads/main.zip"
+    github_repo_master = f"https://github.com/vicmil-pip-v2/{package_name}/archive/refs/heads/master.zip"
 
     # Download the package and unzip it
     tmp_zip = get_directory_path(__file__, 0) + "/temp.zip"
@@ -69,10 +69,10 @@ def install_package(package_name: str):
 
     unzip_without_top_dir(tmp_zip, package_path, delete_zip=True)
 
-    # Install other vizpip dependencies
-    vizpip_requirements_path = f"{package_path}/vizpip_requirements.txt"
-    if os.path.exists(vizpip_requirements_path):
-        with open(vizpip_requirements_path, "r") as file:
+    # Install other vicmil-pip dependencies
+    vicmil_pip_requirements_path = f"{package_path}/vicmil_pip_requirements.txt"
+    if os.path.exists(vicmil_pip_requirements_path):
+        with open(vicmil_pip_requirements_path, "r") as file:
             requirements_content = file.read()
             requirements_content: list = requirements_content.split("\n")
             for requirement in requirements_content:
@@ -88,7 +88,7 @@ def clone_package(package_name: str):
         print(f"Package {package_name} path already exists")
         return
 
-    github_repo = f"git@github.com:vizpip/{package_name}.git"
+    github_repo = f"git@github.com:vicmil-pip-v2/{package_name}.git"
 
     run_command(f'git clone "{github_repo}" "{package_path}"')
 
