@@ -121,3 +121,12 @@ python3 vicmil-pip.py help
 ```
 
 And let **vicmil-pip** guide you from there.
+
+## ⚖️ License
+
+Distributed under the **MIT License**. See `LICENSE` for details.
+
+---
+
+**Author:** [02vicmil](https://github.com/02vicmil)
+**Version:** 2.0.0
