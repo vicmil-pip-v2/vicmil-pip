@@ -114,8 +114,11 @@ def install_package(package_name_raw: str):
     print("Succesfully installed package", package_name)
 
 
-def clone_package(package_name_raw: str):
-    package_name = get_correct_github_repo_name(package_name_raw)
+def clone_package(package_name_raw: str, check_name=True):
+    if check_name:
+        package_name = get_correct_github_repo_name(package_name_raw)
+    else:
+        package_name = package_name_raw
     if not package_name:
         print(f"Package {package_name_raw} does not exists")
         return

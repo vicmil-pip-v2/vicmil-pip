@@ -150,6 +150,16 @@ python3 vicmil_pip.py packages // list all available packages with more info
 
         if len(arguments) > 1:
             vicmil_pip_installer.clone_package(arguments[1])
+
+    if arguments[0] == "force-clone":
+        if not installer_exists():
+            install_installer()
+
+        import vicmil_pip.installer as vicmil_pip_installer
+
+        if len(arguments) > 1:
+            vicmil_pip_installer.remove_package(arguments[1])
+            vicmil_pip_installer.clone_package(arguments[1], check_name=False)
         
     if arguments[0] == "update":
         print("upgrade vicmil_pip/installer.py")
